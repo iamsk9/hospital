@@ -1,0 +1,21 @@
+<ion-modal-view>
+  <ion-content><br><br><br>
+    <div class="list card">
+      <div ng-repeat="list_item in cart_items">
+          <div class="item item-body">
+            {{list_item.item_name}}
+            <div class="cost1">
+              Rs.{{list_item.cost}}
+            </div><br>
+          </div>
+          </div>
+        </div>
+        <center>Total : Rs {{total}}</center>
+        <center>Tax : Rs {{tax}}</center>
+        <center>Bill : Rs {{bill}}</center>
+        <br><br>
+        <center><button class="button button-positive" ng-click="proceed_payment()">
+          Proceed to Pay
+      </button></center>
+  </ion-content>
+</ion-modal-view>

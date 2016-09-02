@@ -1,0 +1,26 @@
+<ion-view view-title="Order Destination">
+  <ion-content><br>
+    <center><h2>Address</h2></center>
+  <div class="list" id="details">
+    <label class="item item-input item-stacked-label">
+      <span class="input-label">Full Name</span>
+      <input type="text" placeholder="FirstName LastName" ng-model="vm.object.name">
+    </label>
+    <label class="item item-input item-stacked-label">
+      <span class="input-label">Email</span>
+      <input type="email" placeholder="Email" ng-model="vm.object.email">
+    </label>
+    <label class="item item-input item-stacked-label">
+      <span class="input-label">Phone No</span>
+      <input type="number" placeholder="Enter Phone No. without 0 or +91" ng-model="vm.object.phoneno">
+    </label>
+    <label class="item item-input item-stacked-label">
+      <span class="input-label">Address</span>
+      <input type="text" placeholder="Your Address" ng-model="vm.object.address">
+    </label><br>
+    <center><button class="button button-positive" ng-click="vm.order()">
+        Order
+    </button></center>
+  </div>
+  </ion-content>
+</ion-view>

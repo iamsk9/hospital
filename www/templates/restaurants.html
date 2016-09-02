@@ -1,0 +1,13 @@
+<ion-view view-title="Restaurants">
+  <ion-content>
+  <div ng-repeat="restaurant in restaurants">
+  <div class="list card" ng-click="vm.openRestaurant({{restaurant.rest_id}})">
+    <div class="item item-body">
+    <img class="full-image" src={{restaurant.img_id}}>
+    <strong><center><p>{{restaurant.rest_name}}</p></center></strong>
+    <p>{{restaurant.description}}</p><br>
+    </div>
+  </div>
+</div>
+</ion-content>
+</ion-view>

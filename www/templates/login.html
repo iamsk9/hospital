@@ -1,0 +1,28 @@
+<ion-modal-view>
+  <ion-content>
+    <br><br><br>
+    <div class="hero no-header flat">
+            <div class="content">
+                <div class="app-icon"></div>
+                <center><h1 id="log">OrderFly</h1></center>
+            </div>
+        </div>
+    <form ng-submit="vm.doLogin()">
+      <div class="list">
+        <label class="item item-input">
+          <span class="input-label">Username</span>
+          <input type="email" ng-model="vm.loginData.email">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Password</span>
+          <input type="password" ng-model="vm.loginData.password">
+        </label>
+
+        <label class="item">
+          <button class="button button-block button-assertive" type="submit">Log in</button>
+        </label>
+        <center><a href="#/app/signup" ng-click="vm.goToRegister()">Not a User? Register Here..</a></center><br>
+      </div>
+    </form>
+  </ion-content>
+</ion-modal-view>

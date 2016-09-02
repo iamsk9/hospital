@@ -1,0 +1,44 @@
+<ion-modal-view>
+  <ion-content>
+    <br><br><br>
+    <div class="hero no-header flat">
+      <div class="content">
+          <div class="app-icon"></div>
+          <center><h1 id="log">OrderFly</h1></center>
+      </div>
+    </div>
+    <form ng-submit="vm.doSignUp()">
+      <div class="list">
+        <label class="item item-input">
+          <span class="input-label">Full Name</span>
+          <input type="text" ng-model="vm.object.name">
+        </label><br>
+        <label class="item item-input">
+          <span class="input-label">Email</span>
+          <input type="email" ng-model="vm.object.email">
+        </label><br>
+        <label class="item item-input">
+          <span class="input-label">Password</span>
+          <input type="password" ng-model="vm.object.password">
+        </label><br>
+        <label class="item item-input">
+          <span class="input-label">Phone No</span>
+          <input type="number" ng-model="vm.object.phoneno">
+        </label><br>
+        <label class="item item-input">
+          <span class="input-label">Landline No</span>
+          <input type="number" ng-model="vm.object.landline">
+        </label><br>
+        <label class="item item-input">
+          <span class="input-label">Address</span>
+          <input type="text" ng-model="vm.object.address">
+        </label><br>
+        <ion-checkbox ng-model="all"><a href="#">Accepting Terms and Conditions</a></ion-checkbox><br>
+        <label class="item">
+          <button class="button button-block button-assertive" type="submit" ng-disabled="!all">Sign Up</button>
+        </label>
+        <center><a href="#/app/signin" ng-click="vm.goToLogin()">Already a User? Login Here..</a></center><br><br>
+      </div>
+    </form>
+  </ion-content>
+</ion-modal-view>
