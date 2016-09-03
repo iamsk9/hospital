@@ -1,15 +1,15 @@
 <ion-view view-title="List">
   <ion-content><br>
-  <div class="list card">
+  <div>
     <div ng-repeat="list_item in list_items">
-      <div class="item item-body">
+      <div>
         <img class="full-image" src={{list_item.image_name}}>
-        <p><center>{{list_item.cat_name}}</center>
+        <center><p>{{list_item.cat_name}}</p></center>
           <div class="add_cart">
-          <ion-checkbox class="checkbox-positive" ng-click="clicked(list_item.cat_id)">Add to Cart</ion-checkbox>
+          <ion-checkbox class="checkbox-positive" ng-click="clicked(list_item.cat_id)">Add to Cart</ion-checkbox><br>
           </div>
-      </p>
-      </div>
+
+  </div>
     </div>
     </div>
   </ion-content>

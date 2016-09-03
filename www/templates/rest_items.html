@@ -1,29 +1,24 @@
 <ion-view view-title="Restaurant Items">
   <ion-content><br>
-    <div class="list card">
+    <div>
     <div ng-repeat="item_det in list_dets">
-      <div class="item item-body" ng-click="select_item(item_det.item_id)">
+      <div ng-click="select_item(item_det.item_id)">
         <img class="full-image" src={{item_det.url}}>
-        <p><center>{{item_det.item_name}}</center>
-          <div class="cost">
-            Cost: {{item_det.cost}}
+        <center><p>{{item_det.item_name}}    </p></center>
+          <div class="cost">  <p>Cost: {{item_det.cost}}</p>
           </div>
           <div class="rating">
-            Rating: {{item_det.rating}}
-          </div><br>
-          <p id="para">
-            Biryani is the special of our Restaurant.
-          </p>
+          <p>Rating: {{item_det.rating}}</p></div>
           <div class="cost">
-            Type: {{item_det.status}}
+            <p>Type: {{item_det.status}}</p>
           </div>
           <div class="add_cart">
-          <ion-checkbox class="checkbox-positive" ng-click="item_clicked(item_det.item_id)">Add to Cart</ion-checkbox>
+          <ion-checkbox class="checkbox-positive" ng-click="item_clicked(item_det.item_id)">Add to Cart</ion-checkbox><br>
           </div>
-      </p>
       </div>
     </div>
     </div>
+    <br><br><br><br>
     <center><button class="button button-positive" ng-click="place_order()">
         Place Order
     </button></center>
