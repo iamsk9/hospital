@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout, $state,signService, $ionicNavBarDelegate,signinService,Backand, $http, $rootScope, $ionicPopup, itemsService, $location) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, $state, $ionicNavBarDelegate,signinService, signService,Backand, $http, $rootScope, $ionicPopup, itemsService, validateService,$location) {
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -12,8 +12,6 @@ angular.module('starter.controllers', [])
   // Form data for the login modal
   $rootScope.$broadcast('authorized');
   $scope.loginData = {};
-
-  $scope.isLogin = true;
 
   // Create the login modal that we will use later
   $ionicModal.fromTemplateUrl('templates/login.html', {
@@ -32,19 +30,18 @@ angular.module('starter.controllers', [])
   $scope.login = function() {
     $scope.modal.show();
   };
+
   var vm = this;
   vm.doSignUp = doSignUp;
   vm.doLogin  = doLogin;
   vm.openDishes = openDishes;
   vm.place_order = place_order;
-  vm.getRest = getRest;
+
   vm.openRestaurant = openRestaurant;
-  vm.otp = otp;
   vm.goToLogin = goToLogin;
   vm.goToRegister = goToRegister;
   $scope.list_dets = [];
   vm.order = order;
-
 
     function order() {
       var confirmPopup = $ionicPopup.confirm({
@@ -104,39 +101,24 @@ angular.module('starter.controllers', [])
     $state.go('app.signup');
   }
 
-  function otp() {
-    if(vm.otpobject.otpp.length==4){
-      $state.go('app.signin');
-      $ionicNavBarDelegate.showBackButton(false);
-        var alertPopup = $ionicPopup.alert({
-          title: 'Thank You!',
-          template: 'Login Now'
-        });
-    }else{
-      var alertPopup = $ionicPopup.alert({
-        title: 'Invalid!',
-        template: 'Wrong Otp'
-      });
-    }
-  }
-
-  function getRest() {
-      itemsService.getRestaurants()
-        .then(function(result){
-          $scope.restaurants = result.data.data;
-        });
-  }
-  getRest();
+  vm.loginData = {};
+  vm.object = {};
 
   //Login function
   function doLogin() {
-    $scope.isLogin = true;
-    $state.go('app.restaurants');
+    $state.go('app.scan');
     $ionicNavBarDelegate.showBackButton(false);
+    /*
+    console.log(validateService.emailValidate(vm.loginData.email));
+    if (!validateService.emailValidate(vm.loginData.email)) {
+      console.log("invalid");
+    }
 
-    /*signinService.logining(vm.loginData.email)
+    var invaliPopup;
+    if (vm.loginData.email != null) {
+    signinService.logining(vm.loginData.email)
         .then(function (result) {
-
+          if(result!=null){
           if(vm.loginData.password == result.password){
           var alertPopup = $ionicPopup.alert({
             title: 'Welcome!',
@@ -148,12 +130,24 @@ angular.module('starter.controllers', [])
           $state.go('app.restaurants');
           $scope.isLogin = true;
         }else {
-          var invaliPopup = $ionicPopup.alert({
+          invaliPopup = $ionicPopup.alert({
             title: 'OOPS!',
-            template: 'Invalid Username or Password'
+            template: 'Invalid Email Id or Password'
           });
         }
-      });*/
+      }else{
+        invaliPopup = $ionicPopup.alert({
+          title: 'OOPS!',
+          template: 'Invalid Emaid Id or Password'
+        });
+      }
+      });
+    }else{
+      invaliPopup = $ionicPopup.alert({
+        title: 'OOPS!',
+        template: 'Enter Email Id'
+      });
+    }*/
   }
 
   function openDishes() {
@@ -167,11 +161,17 @@ angular.module('starter.controllers', [])
 
   // Perform the login action when the user submits the login form
   function doSignUp() {
-    signService.addMember(vm.object)
-        .then(function (result) {
-          $state.go('app.otp');
+    console.log(vm.object.name);
 
-        });
+    if(validateService.detailsValidate(vm.object) === true)
+    {
+      console.log("ok");
+      /*
+      signService.addMember(vm.object)
+          .then(function (result) {
+            $state.go('app.otp');
+          });*/
+      }
   }
 })
 .controller('CategoryCtrl', function($scope) {
@@ -183,6 +183,31 @@ angular.module('starter.controllers', [])
     { image: 'img/p5.jpg', name: 'South Indian',id: 5 },
     { image: 'img/p6.jpg', name: 'Biryani',id: 6 }
   ];
+})
+.controller('OtpCtrl', function($scope, $ionicPopup, $rootScope) {
+  $scope.vm.otpobject = '';
+    $scope.otp = function() {
+    if($scope.vm.otpobject.otpp != null){
+      if($scope.vm.otpobject.otpp.length == 4){
+        $state.go('app.signin');
+        $ionicNavBarDelegate.showBackButton(false);
+          var alertPopup = $ionicPopup.alert({
+            title: 'Thank You!',
+            template: 'Login Now'
+          });
+      }else{
+        var alertPopup = $ionicPopup.alert({
+          title: 'Invalid!',
+          template: 'Wrong Otp'
+        });
+      }
+    }else{
+      var alertPopup = $ionicPopup.alert({
+        title: 'Invalid!',
+        template: 'Wrong Otp'
+      });
+    }
+  };
 })
 /*ListCtrl for the list.html page*/
 .controller('ListCtrl', function($scope, itemsService, $ionicPopup) {
@@ -227,14 +252,21 @@ angular.module('starter.controllers', [])
     $location.path('#/app/list');
   };
 })
-.controller('RestCtrl', function($scope, Backand, $http, $ionicPopup, $state, itemsService, $location, $ionicNavBarDelegate) {
+.controller('RestCtrl', function($scope, Backand, $http, $ionicPopup, $state, $rootScope,itemsService, $location, $ionicNavBarDelegate) {
 
-  itemsService.getDishes()
-  .then(function(result){
-    console.log(result.data.data);
-    $scope.list_dets = result.data.data;
-    itemsService.savedetList($scope.list_dets);
-  });
+    itemsService.getRestaurants()
+    .then(function(result){
+      $scope.restaurants = result.data.data;
+      $rootScope.isLogin = true;
+      console.log($rootScope.isLogin);
+    });
+
+    itemsService.getDishes()
+    .then(function(result){
+      console.log(result.data.data);
+      $scope.list_dets = result.data.data;
+      itemsService.savedetList($scope.list_dets);
+    });
 
     $scope.item_clicked = function (id) {
       itemsService.selectedItem(id);
@@ -252,23 +284,26 @@ angular.module('starter.controllers', [])
       $ionicNavBarDelegate.showBackButton(false);
     };
 })
-.controller('CostCtrl', function($scope, itemsService, $state){
-  $scope.cart_items = itemsService.getSelectedItems();
-  console.log($scope.cart_items);
+.controller('CostCtrl', function($scope, itemsService, $state, signService){
 
-  var sum = 0;
-  for(i=0;i<$scope.cart_items.length;i++)
-    sum = sum + parseInt($scope.cart_items[i].cost);
+  $scope.$on('$ionicView.enter', function(){
+    $scope.cart_items = itemsService.getSelectedItems();
+    console.log($scope.cart_items);
+
+    var sum = 0;
+    for(i=0;i<$scope.cart_items.length;i++)
+      sum = sum + parseInt($scope.cart_items[i].cost);
 
     $scope.total = sum;
     $scope.tax = sum * 0.05;
     $scope.bill = sum + $scope.tax;
+    });
 
   $scope.proceed_payment = function(){
     $state.go('app.address');
   };
 })
-.controller('HomeController', function($scope, $rootScope, $cordovaBarcodeScanner, $ionicPlatform) {
+.controller('HomeController', function($scope, $rootScope, $cordovaBarcodeScanner, $ionicPlatform, $ionicPopup, signService) {
    var vm = this;
    vm.scan = function(){
    $ionicPlatform.ready(function() {
@@ -276,12 +311,16 @@ angular.module('starter.controllers', [])
          .scan()
          .then(function(result) {
          // Success! Barcode data is here
+
+         $rootScope.object.code = result.text;
+
          vm.scanResults = "We got a barcode\n" +
          "Result: " + result.text + "\n" +
          "Format: " + result.format + "\n" +
          "Cancelled: " + result.cancelled;
         }, function(error) {
         // An error occurred
+        $rootScope.object.code = result.text;
         vm.scanResults = 'Error: ' + error;
         });
       });

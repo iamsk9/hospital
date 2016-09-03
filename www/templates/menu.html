@@ -17,8 +17,8 @@
       <h1 class="title">MENU</h1>
     </ion-header-bar>
     <ion-content>
-      <div ng-show="isLogin">
       <ion-list>
+        <div ng-show="isLogin">
         <ion-item menu-close href="#/app/restaurants" ng-click="vm.getRest()">
           Restaurants
         </ion-item>
@@ -64,8 +64,11 @@
         <ion-item menu-close href="#/app/playlists">
           About
         </ion-item>
+        <ion-item menu-close href="#/app/playlists">
+          Logout
+        </ion-item>
+        </div>
       </ion-list>
-      </div>
     </ion-content>
   </ion-side-menu>
 </ion-side-menus>

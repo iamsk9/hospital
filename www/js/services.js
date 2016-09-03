@@ -9,6 +9,108 @@ angular.module('starter.services', [])
             }
             return $q.reject(response);
         };
+  })
+
+  .service('validateService', function ($rootScope, $q, $ionicPopup) {
+        detailsValidate = function(details){
+          if(nameValidate(details.name) === true){
+            if(emailValidate(details.email) === true){
+              if(passwordValidate(details.password) === true){
+                if(phonenoValidate(details.phoneno) === true){
+                  console.log(details.landline!=null);
+                  if(details.landline != null)
+                  {
+                    if(landlineValidate(details.landline) === true){
+                        if(details.address == null){
+                          var invaliPopup = $ionicPopup.alert({
+                            title: 'OOPS!',
+                            template: 'Enter Address'
+                          });
+                        }else{
+                          return true;
+                        }
+                  }
+                }else {
+                  if(details.address == null){
+                    var invaliPopup = $ionicPopup.alert({
+                      title: 'OOPS!',
+                      template: 'Enter Address'
+                    });
+                  }else{
+                    return true;
+                  }
+                }
+                }
+              }
+            }
+          }
+        };
+
+         function nameValidate(name){
+          var pattern = /^[a-zA-Z ]+$/i;
+          if (!pattern.test(name) || name==null){
+            var invaliPopup = $ionicPopup.alert({
+              title: 'OOPS!',
+              template: 'Invalid Full Name'
+            });
+            return false;
+          }
+          return true;
+        };
+
+        function emailValidate(name){
+         pattern = /^[a-z0-9_.]+@[a-z]+.[a-z]+$/i;
+         if (!pattern.test(name) || name==null) {
+           var invaliPopup = $ionicPopup.alert({
+             title: 'OOPS!',
+             template: 'Invalid Email'
+           });
+           return false;
+         }
+         return true;
+       };
+
+       function passwordValidate(name){
+        var pattern = /^[a-zA-Z0-9_]+$/i;
+        if (!pattern.test(name) || name==null) {
+          var invaliPopup = $ionicPopup.alert({
+            title: 'OOPS!',
+            template: 'Invalid Password'
+          });
+          return false;
+        }
+        return true;
+      };
+
+      function phonenoValidate(name){
+        name = name.toString();
+       var pattern = /^[0-9]{10}$/i;
+       if (!pattern.test(name) || name==null) {
+         var invaliPopup = $ionicPopup.alert({
+           title: 'OOPS!',
+           template: 'Invalid Phone No'
+         });
+         return false;
+       }
+       return true;
+     };
+
+     function landlineValidate(name){
+       name = name.toString();
+      var pattern = /^[0-9]{10}$/i;
+      if (!pattern.test(name) || name==null) {
+        var invaliPopup = $ionicPopup.alert({
+          title: 'OOPS!',
+          template: 'Invalid Land line No'
+        });
+        return false;
+      }
+      return true;
+    }
+
+        return{
+          detailsValidate: detailsValidate
+        };
     })
 
 /*Service for the category controller*/
@@ -158,7 +260,8 @@ angular.module('starter.services', [])
 .service('signService', function ($http, Backand) {
   var self = this,
   baseUrl = '/1/objects/',
-  objectName = 'items/';
+  objectName = 'items/',
+  qr;
 
   function getUrl() {
     return Backand.getApiUrl() + baseUrl + objectName;
@@ -168,6 +271,14 @@ angular.module('starter.services', [])
     return getUrl() + id;
   }
 
+  saveQr = function(data){
+    qr = data;
+  };
+
+  getQr = function(data){
+    return qr;
+  };
+
   addMember = function (data) {
     console.log(data);
     return $http.post(getUrl(), data);
@@ -175,6 +286,8 @@ angular.module('starter.services', [])
 
   return {
     addMember: addMember,
+    saveQr: saveQr,
+    getQr: getQr
   };
 })
 
