@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-var sampleApp = angular.module('starter', ['ionic', 'starter.controllers', 'backand', 'starter.services','ngCordova'])
+var sampleApp = angular.module('starter', ['ionic', 'starter.controllers', 'backand', 'starter.services','ngCordova', 'ngMessages'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -42,7 +42,8 @@ var sampleApp = angular.module('starter', ['ionic', 'starter.controllers', 'back
     url: '/signup',
     views: {
       'menuContent': {
-        templateUrl: 'templates/signup.html'
+        templateUrl: 'templates/signup.html',
+        controller: 'AppCtrl as vm'
       }
     }
   })
@@ -113,7 +114,7 @@ var sampleApp = angular.module('starter', ['ionic', 'starter.controllers', 'back
       views: {
         'menuContent': {
           templateUrl: 'templates/restaurants.html',
-          controller: 'AppCtrl as vm'
+          controller: 'RestCtrl'
         }
       }
     })
@@ -149,7 +150,7 @@ var sampleApp = angular.module('starter', ['ionic', 'starter.controllers', 'back
       views: {
         'menuContent': {
           templateUrl: 'templates/otp.html',
-          controller: 'AppCtrl as vm'
+          controller: 'OtpCtrl'
         }
       }
     })
