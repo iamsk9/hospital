@@ -106,9 +106,9 @@ angular.module('starter.controllers', [])
 
   //Login function
   function doLogin() {
-    $state.go('app.scan');
-    $ionicNavBarDelegate.showBackButton(false);
-    /*
+    //$state.go('app.scan');
+    //$ionicNavBarDelegate.showBackButton(false);
+
     console.log(validateService.emailValidate(vm.loginData.email));
     if (!validateService.emailValidate(vm.loginData.email)) {
       console.log("invalid");
@@ -127,7 +127,7 @@ angular.module('starter.controllers', [])
           vm.loginData.email = '';
           vm.loginData.password = '';
           $ionicNavBarDelegate.showBackButton(false);
-          $state.go('app.restaurants');
+          $state.go('app.scan');
           $scope.isLogin = true;
         }else {
           invaliPopup = $ionicPopup.alert({
@@ -147,7 +147,7 @@ angular.module('starter.controllers', [])
         title: 'OOPS!',
         template: 'Enter Email Id'
       });
-    }*/
+    }
   }
 
   function openDishes() {
@@ -165,12 +165,12 @@ angular.module('starter.controllers', [])
 
     if(validateService.detailsValidate(vm.object) === true)
     {
-      console.log("ok");
-      /*
+      //console.log("ok");
+
       signService.addMember(vm.object)
           .then(function (result) {
             $state.go('app.otp');
-          });*/
+          });
       }
   }
 })
@@ -281,7 +281,7 @@ angular.module('starter.controllers', [])
       $scope.list_items = itemsService.getSelectedItems();
       console.log($scope.list_items);
       $state.go('app.cost');
-      $ionicNavBarDelegate.showBackButton(false);
+      //$ionicNavBarDelegate.showBackButton(false);
     };
 })
 .controller('CostCtrl', function($scope, itemsService, $state, signService){
